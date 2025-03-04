@@ -1,0 +1,43 @@
+services:
+    app:
+        build: .
+        container_name: 'abelo-app'
+        ports:
+            - '${APP_PORT:-80}:80'
+        environment:
+            WP_URL: '${WP_URL}'
+            WP_TITLE: '${WP_TITLE}'
+            WP_ADMIN_USER: '${WP_ADMIN_USER}'
+            WP_ADMIN_PASSWORD: '${WP_ADMIN_PASSWORD}'
+            WP_ADMIN_EMAIL: '${WP_ADMIN_EMAIL}'
+            WP_DB_NAME: '${WP_DB_NAME}'
+            WP_DB_USER: '${WP_DB_USER}'
+            WP_DB_PASSWORD: '${WP_DB_PASSWORD}'
+            WP_DB_HOST: '${WP_DB_HOST}'
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - abelo
+        depends_on:
+            - mariadb
+
+    mariadb:
+        image: 'mariadb:11'
+        container_name: 'abelo-db'
+        ports:
+            - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${WP_DB_PASSWORD}'
+            MYSQL_DATABASE: '${WP_DB_NAME}'
+            MYSQL_USER: '${WP_DB_USER}'
+            MYSQL_PASSWORD: '${WP_DB_PASSWORD}'
+        volumes:
+            - 'abelo-mariadb:/var/lib/mysql'
+        networks:
+            - abelo
+networks:
+    abelo:
+        driver: bridge
+volumes:
+    abelo-mariadb:
+        driver: local

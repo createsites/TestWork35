@@ -23,8 +23,8 @@ services:
             WP_ADMIN_EMAIL: '${WP_ADMIN_EMAIL}'
             APP_PORT: '${APP_PORT}'
         volumes:
-#         - ./themes:/var/www/html/wp-content/themes
-#         - ./plugins:/var/www/html/wp-content/plugins
+            - ./themes:/var/www/html/wp-content/themes
+#           - ./plugins:/var/www/html/wp-content/plugins
         networks:
             - abelo
         depends_on:

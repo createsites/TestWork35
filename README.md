@@ -10,4 +10,6 @@
 
 ```shell
 docker-compose up --build -d
+
+docker exec -it abelo-app sh -c 'sh < wp_init.sh'
 ```

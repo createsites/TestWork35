@@ -1,21 +1,30 @@
+version: '3.9'
+
 services:
     app:
         build: .
+        image: 'testwork35:latest'
         container_name: 'abelo-app'
         ports:
             - '${APP_PORT:-80}:80'
         environment:
-            WP_URL: '${WP_URL}'
+            # db settings
+            WORDPRESS_DB_HOST: '${WP_DB_HOST}'
+            WORDPRESS_DB_USER: '${WP_DB_USER}'
+            WORDPRESS_DB_PASSWORD: '${WP_DB_PASSWORD}'
+            WORDPRESS_DB_NAME: '${WP_DB_NAME}'
+            # debug
+            WORDPRESS_DEBUG: 1
+            # wp admin settings
             WP_TITLE: '${WP_TITLE}'
+            WP_URL: '${WP_URL}'
             WP_ADMIN_USER: '${WP_ADMIN_USER}'
             WP_ADMIN_PASSWORD: '${WP_ADMIN_PASSWORD}'
             WP_ADMIN_EMAIL: '${WP_ADMIN_EMAIL}'
-            WP_DB_NAME: '${WP_DB_NAME}'
-            WP_DB_USER: '${WP_DB_USER}'
-            WP_DB_PASSWORD: '${WP_DB_PASSWORD}'
-            WP_DB_HOST: '${WP_DB_HOST}'
+            APP_PORT: '${APP_PORT}'
         volumes:
-            - '.:/var/www/html'
+#         - ./themes:/var/www/html/wp-content/themes
+#         - ./plugins:/var/www/html/wp-content/plugins
         networks:
             - abelo
         depends_on:

@@ -19,3 +19,21 @@ function storefront_parent_theme_enqueue_styles() {
 		[ 'storefront-style' ]
 	);
 }
+
+// создание custom post types для городов
+require get_stylesheet_directory() . '/inc/custom-post-types/cities.php';
+
+// кастомные поля с шириной и долготой
+require get_stylesheet_directory() . '/inc/custom-post-fields/lat-long.php';
+
+// кастомное поле с id города
+require get_stylesheet_directory() . '/inc/custom-post-fields/id.php';
+
+// кастомные таксономии (страны)
+require get_stylesheet_directory() . '/inc/custom-taxonomies/countries.php';
+
+// виджет погоды
+require get_stylesheet_directory() . '/inc/widgets/weather.php';
+
+// ajax для таблицы городов
+require get_stylesheet_directory() . '/inc/ajax/cities.php';

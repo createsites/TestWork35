@@ -1,14 +1,13 @@
 #!/bin/bash
 
-wp core install \
+su -c "wp core install \
     --url='${WP_URL}:${APP_PORT}' \
-    --title="${WP_TITLE}" \
+    --title='${WP_TITLE}' \
     --admin_user=${WP_ADMIN_USER} \
     --admin_password=${WP_ADMIN_PASSWORD} \
     --admin_email=${WP_ADMIN_EMAIL} \
     --skip-themes \
-    --skip-plugins \
-    --allow-root
+    --skip-plugins" wpuser
 
 # устанавливаем site url и home
 su -c " \
@@ -20,11 +19,11 @@ su -c " \
 chmod -R g+w wp-content
 chown -R www-data:www-data wp-content/themes/
 
-# удаляем лишние темы
-su -c "wp theme delete twentytwentyfive twentytwentyfour twentytwentythree" wpuser
-
 # активируем нашу тему
 su -c "wp theme activate test_work_35" wpuser
+
+# удаляем лишние темы
+su -c "wp theme delete twentytwentyfive twentytwentyfour twentytwentythree" wpuser
 
 # удаляем ненужные посты и страницы
 su -c 'wp post delete $(wp post list --post_type=post,page --format=ids)' wpuser
